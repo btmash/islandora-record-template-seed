@@ -24,3 +24,4 @@ script:
   - drush coder-review --reviews=production,security,style,i18n,potx,sniffer islandora_record_template_seed
   - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora_record_template_seed
   - drush test-run --uri=http://localhost:8081 "Islandora Record Template Seed"
+
