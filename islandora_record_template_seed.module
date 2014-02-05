@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function islandora_record_template_seed_menu() {
+  $items = array();
+
+  $items['islandora/object/%islandora_object/record-seed'] = array(
+    'title' => 'Clone/Seed Template',
+    'page callback' => 'islandora_record_template_seed_add_seed',
+    'page arguments' => array(2),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_record_template_seed_add_access_callback',
+    'access arguments' => array(
+      array(
+        FEDORA_MANAGE_PROPERTIES,
+        FEDORA_METADATA_EDIT,
+        FEDORA_ADD_DS,
+        FEDORA_PURGE,
+        FEDORA_INGEST,
+      ), 2),
+  );
+
+  return $items;
+}
+
+function islandora_record_template_seed_add_access_callback($perms, $object = NULL) {
+  if (empty($object)) {
+    return FALSE;
+  }
+  if (islandora_record_template_seed_object_is_collection($object)) {
+    return FALSE;
+  }
+  return islandora_object_manage_access_callback($perms, $object);
+}
+
+function islandora_record_template_seed_add_seed(AbstractObject $islandora_object) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/datastream');
+
+  $parents = islandora_get_parents_from_rels_ext($islandora_object);
+  $options = array(
+    'query' => array(
+      'irtsid' => $islandora_object->id,
+    ),
+  );
+
+  foreach ($parents as $parent) {
+    if (islandora_record_template_seed_object_is_collection($parent)) {
+      drupal_goto("islandora/object/{$parent->id}/manage/overview/ingest", $options);
+    }
+  }
+}
+
+function islandora_record_template_seed_object_is_collection(AbstractObject $islandora_object) {
+  foreach ($islandora_object as $ds) {
+    if ($ds->id == 'COLLECTION_POLICY') {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_ingest_steps_alter().
+ */
+function islandora_record_template_seed_islandora_ingest_steps_alter(&$steps, &$form_state) {
+  if (!empty($_REQUEST['irtsid']) && ($original_mods_datastream = islandora_datastream_load('MODS', $_REQUEST['irtsid']))) {
+    foreach ($steps as $key => $step) {
+      if (in_array($key, array('xml_form_builder_association_step', 'xml_form_builder_metadata_step'))) {
+        foreach($steps[$key]['args'][0] as $arg_key => $arg_values) {
+          if ($arg_key == 'template' && is_string($arg_values)) {
+            $steps[$key]['args'][0][$arg_key] = $original_mods_datastream->content;
+          }
+          else if (is_array($arg_values) && isset($arg_values['dsid']) && $arg_values['dsid'] == 'MODS') {
+            $steps[$key]['args'][0][$arg_key]['template'] = $original_mods_datastream->content;
+          }
+        }
+      }
+    }
+  }
+}
