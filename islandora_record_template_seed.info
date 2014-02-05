@@ -3,5 +3,5 @@ description = "Create a new record by prepopulating the record create mods form 
 description = "A chillco fork of the Islandora Large Image Solution Pack"
 dependencies[] = xml_forms
 package = Islandora
-version = 7.x-0.1
+version = 7.x-1.0
 core = 7.x
