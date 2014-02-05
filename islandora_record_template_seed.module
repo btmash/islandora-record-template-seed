@@ -71,10 +71,9 @@ function islandora_record_template_seed_add_access_callback($perms, $object = NU
 }
 
 /**
- * Page callback for redirecting user to appropriate collection with mods
- * record.
+ * Page callback - redirect user to appropriate collection with mods record.
  *
- * @param AbstractObject $object
+ * @param AbstractObject $islandora_object
  *   The object to test, if NULL given the object doesn't exist or is
  *   inaccessible.
  */
@@ -99,7 +98,7 @@ function islandora_record_template_seed_add_seed(AbstractObject $islandora_objec
 /**
  * Checks if the fedora object is a collection.
  * 
- * @param AbstractObject $object
+ * @param AbstractObject $islandora_object
  *   The object to test, if NULL given the object doesn't exist or is
  *   inaccessible.
  */
