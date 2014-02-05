@@ -44,7 +44,7 @@ N/A
 
 #### CONTACT
 
-Ashok Modi (<btmash at gmail dot com>)
+Ashok Modi (http://btmash.com)
 
 #### SPONSOR
 
