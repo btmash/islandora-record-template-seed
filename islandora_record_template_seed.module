@@ -20,7 +20,6 @@ function islandora_record_template_seed_menu() {
     'access callback' => 'islandora_record_template_seed_add_access_callback',
     'access arguments' => array(
       array(
-        FEDORA_MANAGE_PROPERTIES,
         FEDORA_METADATA_EDIT,
         FEDORA_ADD_DS,
         FEDORA_PURGE,
