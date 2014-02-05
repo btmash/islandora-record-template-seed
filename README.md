@@ -17,12 +17,8 @@ Enable the module.
 
 #### CONFIGURATION
 
-Currently there is nothing to configure. This will work with any Fedora Object
+Currently there is nothing to configure. This should work with any Fedora Object
 that is not a collection.
-
-#### TROUBLESHOOTING
-
-N/A
 
 #### FAQ
 
