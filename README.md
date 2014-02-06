@@ -1,6 +1,6 @@
 #### BUILD STATUS
 
-Currently no implemented tests.
+[![Build Status](https://travis-ci.org/btmash/islandora-record-template-seed.png?branch=7.x-1.x)](https://travis-ci.org/btmash/islandora-record-template-seed)
 
 #### SUMMARY
 
