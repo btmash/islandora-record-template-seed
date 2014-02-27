@@ -38,7 +38,7 @@ function islandora_record_template_seed_islandora_ingest_steps_alter(&$steps, &$
     foreach ($steps as $key => $step) {
       if (in_array($key, array('xml_form_builder_association_step', 'xml_form_builder_metadata_step'))) {
         foreach ($steps[$key]['args'][0] as $arg_key => $arg_values) {
-          if ($arg_key == 'template' && is_string($arg_values)) {
+          if ($arg_key == 'template' && (is_bool($arg_values) || is_string($arg_values))) {
             $steps[$key]['args'][0][$arg_key] = $original_mods_datastream->content;
           }
           elseif (is_array($arg_values) && isset($arg_values['dsid']) && $arg_values['dsid'] == 'MODS') {
