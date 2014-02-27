@@ -31,6 +31,25 @@ function islandora_record_template_seed_menu() {
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function islandora_record_template_seed_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'xml_form_builder_ingest_form') {
+    if (!empty($_REQUEST['irtsid']) && ($original_mods_datastream = islandora_datastream_load('MODS', $_REQUEST['irtsid']))) {
+      // @TODO: Figure out more flexible way to remove default values.
+      $associated_title = $form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['title_field'];
+      $title = &$form;
+      foreach ($associated_title as $value) {
+        $title = &$title[$value];
+      }
+      if (isset($title['#default_value'])) {
+        $title['#default_value'] = '';
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_ingest_steps_alter().
  */
 function islandora_record_template_seed_islandora_ingest_steps_alter(&$steps, &$form_state) {
