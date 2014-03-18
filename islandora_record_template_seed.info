@@ -1,6 +1,5 @@
 name = "Islandora Record Template Seed"
 description = "Create a new record by prepopulating the record create mods form with a pre-existing fedorda mods record object"
-description = "A chillco fork of the Islandora Large Image Solution Pack"
 dependencies[] = xml_forms
 package = Islandora
 version = 7.x-1.0
