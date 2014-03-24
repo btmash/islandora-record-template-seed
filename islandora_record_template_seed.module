@@ -46,14 +46,21 @@ function islandora_record_template_seed_menu() {
 function islandora_record_template_seed_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'xml_form_builder_ingest_form') {
     if (!empty($_REQUEST['irtsid']) && ($original_mods_datastream = islandora_datastream_load('MODS', $_REQUEST['irtsid']))) {
-      // @TODO: Figure out more flexible way to remove default values.
-      $associated_title = $form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['title_field'];
-      $title = &$form;
-      foreach ($associated_title as $value) {
-        $title = &$title[$value];
-      }
-      if (isset($title['#default_value'])) {
-        $title['#default_value'] = '';
+      $form_name = _islandora_record_template_seed_sanitize($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['form_name']);
+      $emptied_fields = variable_get('islandora_record_template_seed_fields_' . $form_name, array());
+      foreach ($emptied_fields as $key => $emptied_field) {
+        $field = &$form;
+        $associated_field = array();
+        if (!empty($emptied_field)) {
+          $associated_field = unserialize($key);
+        }
+        foreach ($associated_field as $value) {
+          $field = &$field[$value];
+        }
+        // @TODO: Figure out way to remove values from multi-field.
+        if (isset($field['#default_value'])) {
+          $field['#default_value'] = '';
+        }
       }
     }
   }
