@@ -12,6 +12,16 @@
 function islandora_record_template_seed_menu() {
   $items = array();
 
+  $items['admin/islandora/islandora-record-template-seed'] = array(
+    'title' => 'Record Template Seed',
+    'description' => 'Configure the Record Template Seed.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_record_template_seed_configuration'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'includes/admin.form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   $items['islandora/object/%islandora_object/record-seed'] = array(
     'title' => 'Clone/Seed Template',
     'page callback' => 'islandora_record_template_seed_add_seed',
@@ -127,4 +137,11 @@ function islandora_record_template_seed_object_is_collection(AbstractObject $isl
     }
   }
   return FALSE;
+}
+
+/**
+ * Sanitizes a form name (useful for variables).
+ */
+function _islandora_record_template_seed_sanitize($name) {
+  return preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 }
