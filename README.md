@@ -15,10 +15,16 @@ The XML Forms Module (https://github.com/islandora/islandora_xml_forms)
 
 Enable the module.
 
+#### USAGE
+
+If you go to a record with a valid MODS datastream (and MODS form), you will
+get a menu task to 'Clone/Seed Template'. Click the link to get an ingest form
+that is pre-filled with the mods data from the record you clicked from.
+
 #### CONFIGURATION
 
-Currently there is nothing to configure. This should work with any Fedora Object
-that is not a collection.
+You can configure which elements of the form/record do not get added to the 
+seed process at /admin/islandora/islandora-record-template-seed.
 
 #### FAQ
 
@@ -37,10 +43,6 @@ that is not a collection.
  Q: Where are the tests?
  
  A: Another thing I am somewhat terrible at. It will be a work in progress.
-
-#### CONTACT
-
-Ashok Modi (http://btmash.com)
 
 #### SPONSOR
 
