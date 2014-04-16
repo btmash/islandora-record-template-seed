@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Administrative Form (and functions)
+ */
+
+/**
+ * Returns form for setting ignored fields.
+ */
 function islandora_record_template_seed_configuration($form, &$form_state) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'xml_form_builder', 'XMLFormRepository');
